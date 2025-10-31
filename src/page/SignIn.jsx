@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {signInWithEmailAndPassword} from "firebase/auth";
+import {signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {
     Box, Button,
     FormControl,
@@ -16,6 +16,8 @@ import GoogleIcon from "@mui/icons-material/Google";
 import {auth} from "../firebaseConfig";
 
 export const SignIn = () => {
+
+    const provider = new GoogleAuthProvider();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -45,6 +47,18 @@ export const SignIn = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode, " ", errorMessage);
+            });
+    }
+
+    const signInWithGoogle = async () => {
+        await signInWithPopup(auth, provider)
+            .then((result) => {
+
+                //const credential = GoogleAuthProvider.credentialFromResult(result);
+                const user = result.user;
+
+            }).catch((error) => {
+
             });
     }
 
@@ -119,7 +133,9 @@ export const SignIn = () => {
 
                 <Button
                     size="large"
-                    variant="contained">
+                    variant="contained"
+                    onClick={signInWithGoogle}
+                >
                     <GoogleIcon className="google-icon" fontSize="medium"/> Sing In with Google
                 </Button>
 
