@@ -10,13 +10,15 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {createUserWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {auth} from "../firebaseConfig"
 import GoogleIcon from '@mui/icons-material/Google';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export const SignUp = () => {
+
+    const provider = new GoogleAuthProvider();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -49,6 +51,18 @@ export const SignUp = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode, " ", errorMessage);
+            });
+    }
+
+    const signUpWithGoogle = async () => {
+        await signInWithPopup(auth, provider)
+            .then((result) => {
+
+                //const credential = GoogleAuthProvider.credentialFromResult(result);
+                const user = result.user;
+
+            }).catch((error) => {
+                //error
             });
     }
 
@@ -135,7 +149,8 @@ export const SignUp = () => {
 
                 <Button
                     size="large"
-                    variant="contained">
+                    variant="contained"
+                    onClick={signUpWithGoogle}>
                     <GoogleIcon className="google-icon" fontSize="medium"/> Sing Up with Google
                 </Button>
 
