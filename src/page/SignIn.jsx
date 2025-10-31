@@ -13,6 +13,7 @@ import {
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import GoogleIcon from "@mui/icons-material/Google";
+import {PasswordReset} from "../component/PasswordReset";
 import {auth} from "../firebaseConfig";
 
 export const SignIn = () => {
@@ -24,6 +25,10 @@ export const SignIn = () => {
         password: ''
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -115,6 +120,14 @@ export const SignIn = () => {
                     />
                 </FormControl>
 
+                <div style={{textAlign: 'right'}}>
+                    <Button
+                        variant="text"
+                        onClick={handleOpen}>
+                        Forgot password?
+                    </Button>
+                </div>
+
                 <Button
                     size="large"
                     variant="contained"
@@ -140,6 +153,8 @@ export const SignIn = () => {
                 </Button>
 
             </Box>
+
+            <PasswordReset open={open} handleClose={handleClose}/>
 
         </div>
     )
