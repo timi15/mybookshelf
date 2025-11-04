@@ -1,22 +1,37 @@
-import './App.css';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import {useContext} from "react";
 import {Layout} from "./component/Layout";
 import {Home} from "./page/Home";
 import {Favourites} from "./page/Favourites";
 import {ToRead} from "./page/ToRead";
 import {Reviews} from "./page/Reviews";
+import {SignIn} from "./page/SignIn";
+import {SignUp} from "./page/SignUp";
+import {AuthContext} from "./context/auth/Auth";
+import {ProtectedRoute} from "./component/ProtectedRoute";
 
 function App() {
+
+    const {currentUser} = useContext(AuthContext);
+
+    console.log(currentUser)
+
     return (
         <Router>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Home/>}> </Route>
-                    <Route path="/favourites" element={<Favourites/>}> </Route>
-                    <Route path="/to-read" element={<ToRead/>}> </Route>
-                    <Route path="/book-reviews" element={<Reviews/>}> </Route>
-                </Routes>
-            </Layout>
+            <Routes>
+
+                <Route path="/" element={<Navigate to="/sign-in" replace/>}/>
+                <Route path="/sign-in" element={<SignIn/>}/>
+                <Route path="/sign-up" element={<SignUp/>}/>
+
+
+                <Route element={<ProtectedRoute><Layout/></ProtectedRoute>}>
+                    <Route path="/home" element={<Home/>}/>
+                    <Route path="/favourites" element={<Favourites/>}/>
+                    <Route path="/to-read" element={<ToRead/>}/>
+                    <Route path="/book-reviews" element={<Reviews/>}/>
+                </Route>
+            </Routes>
         </Router>
     );
 }
