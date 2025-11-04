@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {
     AppBar,
     Avatar,
@@ -14,19 +14,25 @@ import {
 } from "@mui/material";
 import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
-import {useNavigate} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
+import {AuthContext} from "../context/auth/Auth";
 
-export const Layout = ({children}) => {
+export const Layout = () => {
 
+    const {logout} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const pages = [
-        {name: 'Home', route: '/'},
+        {name: 'Home', route: '/home'},
         {name: 'Favourites', route: '/favourites'},
         {name: 'To Read', route: '/to-read'},
         {name: 'Reviews', route: '/book-reviews'},
     ];
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+    const settings = [
+        {name: 'Profile', route: '/profile'},
+        {name: 'Logout', route: '/logout'},
+    ];
 
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -45,12 +51,15 @@ export const Layout = ({children}) => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (route = false) => {
+        if (route) {
+            navigate(route);
+        }
         setAnchorElUser(null);
     };
 
     return (
-        <>
+        <React.Fragment>
             <AppBar position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
@@ -130,7 +139,7 @@ export const Layout = ({children}) => {
                             {pages.map((page, index) => (
                                 <Button
                                     key={index}
-                                    onClick={()=>handleCloseNavMenu(page.route)}
+                                    onClick={() => handleCloseNavMenu(page.route)}
                                     sx={{my: 2, color: 'white', display: 'block'}}
                                 >
                                     {page.name}
@@ -159,9 +168,17 @@ export const Layout = ({children}) => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography sx={{textAlign: 'center'}}>{setting}</Typography>
+                                {settings.map((setting, index,) => (
+                                    <MenuItem key={index} onClick={() => {
+                                        if (setting.route === '/logout') {
+                                            logout();
+                                            navigate("/sign-in")
+                                        } else {
+                                            handleCloseUserMenu(setting.route);
+                                        }
+                                    }}>
+
+                                        <Typography sx={{textAlign: 'center'}}>{setting.name}</Typography>
                                     </MenuItem>
                                 ))}
                             </Menu>
@@ -169,7 +186,9 @@ export const Layout = ({children}) => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {children}
-        </>
+
+            <Outlet/>
+
+        </React.Fragment>
     )
 }
