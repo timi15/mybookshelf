@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Button, Modal, TextField, Typography, Snackbar} from '@mui/material';
-import {sendPasswordResetEmail} from 'firebase/auth';
-import {auth} from '../firebaseConfig';
 import '../assert/password-reset-modal.css';
+import {AuthContext} from "../context/auth/Auth";
 
 export const PasswordReset = ({open, handleClose}) => {
+
+    const {passwordResetEmail} = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -22,13 +23,14 @@ export const PasswordReset = ({open, handleClose}) => {
         setOpenAlert(false);
     };
 
+
     const resetPassword = async (e) => {
         e.preventDefault();
         setMessage('');
         setError('');
 
         try {
-            await sendPasswordResetEmail(auth, email);
+            await passwordResetEmail(email);
             setMessage('✅ Password reset email sent! Please check your inbox.');
             setEmail('');
         } catch (error) {

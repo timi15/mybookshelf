@@ -1,5 +1,4 @@
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
-import {useContext} from "react";
 import {Layout} from "./component/Layout";
 import {Home} from "./page/Home";
 import {Favourites} from "./page/Favourites";
@@ -7,14 +6,9 @@ import {ToRead} from "./page/ToRead";
 import {Reviews} from "./page/Reviews";
 import {SignIn} from "./page/SignIn";
 import {SignUp} from "./page/SignUp";
-import {AuthContext} from "./context/auth/Auth";
 import {ProtectedRoute} from "./component/ProtectedRoute";
 
 function App() {
-
-    const {currentUser} = useContext(AuthContext);
-
-    console.log(currentUser)
 
     return (
         <Router>

@@ -4,7 +4,8 @@ import {
     onAuthStateChanged,
     signInWithPopup,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail
 } from "firebase/auth";
 import {auth} from '../../firebaseConfig'
 
@@ -14,6 +15,7 @@ export const Auth = ({children}) => {
 
     const provider = new GoogleAuthProvider();
     const [currentUser, setCurrentUser] = useState(null);
+    const [idToken, setIdToken] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const signUpWithEmail = (email, password) => {
@@ -32,18 +34,38 @@ export const Auth = ({children}) => {
         return auth.signOut()
     }
 
+    const passwordResetEmail = (email) => {
+        return sendPasswordResetEmail(auth, email)
+    }
+
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setCurrentUser(currentUser);
+            if (currentUser) {
+                const token = await currentUser.getIdToken();
+                setIdToken(token);
+            } else {
+                setIdToken(null);
+            }
             setLoading(false);
         });
 
         return () => unsubscribe();
     }, []);
 
+
     return (
         <AuthContext.Provider
-            value={{currentUser, loading, signUpWithEmail, signInWithEmail, signInWithGoogle, logout}}>
+            value={{
+                currentUser,
+                loading,
+                signUpWithEmail,
+                signInWithEmail,
+                signInWithGoogle,
+                passwordResetEmail,
+                idToken,
+                logout
+            }}>
             {!loading && children}
         </AuthContext.Provider>
     )
