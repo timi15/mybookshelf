@@ -12,14 +12,13 @@ import {
     Typography,
     Menu
 } from "@mui/material";
-import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Outlet, useNavigate} from "react-router-dom";
 import {AuthContext} from "../context/auth/Auth";
 
 export const Layout = () => {
 
-    const {logout} = useContext(AuthContext);
+    const {logout, currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const pages = [
@@ -60,7 +59,7 @@ export const Layout = () => {
 
     return (
         <React.Fragment>
-            <AppBar position="sticky" >
+            <AppBar position="sticky">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
 
@@ -88,7 +87,7 @@ export const Layout = () => {
                                     horizontal: 'left',
                                 }}
                                 open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
+                                onClose={() => setAnchorElUser(null)}
                                 sx={{display: {xs: 'block', md: 'none'}}}
                             >
                                 {pages.map((page, index) => (
@@ -112,8 +111,11 @@ export const Layout = () => {
                         </Box>
                         <Box sx={{flexGrow: 0}}>
                             <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar
+                                        alt="User Avatar"
+                                        src={currentUser?.photoURL || "/static/images/avatar/2.jpg"}
+                                    />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -130,7 +132,7 @@ export const Layout = () => {
                                     horizontal: 'right',
                                 }}
                                 open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
+                                onClose={() => setAnchorElUser(null)}
                             >
                                 {settings.map((setting, index,) => (
                                     <MenuItem key={index} onClick={() => {
