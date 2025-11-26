@@ -59,8 +59,8 @@ export const Layout = () => {
 
     return (
         <React.Fragment>
-            <AppBar position="sticky">
-                <Container maxWidth="xl">
+            <AppBar position="sticky" style={{backgroundColor:' #3a4943'}}>
+                <Container maxWidth="xl" >
                     <Toolbar disableGutters>
 
                         <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
