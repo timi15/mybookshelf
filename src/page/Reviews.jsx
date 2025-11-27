@@ -4,10 +4,11 @@ import {Box, Button, Card, CardActions, CardContent, CardMedia, IconButton, Rati
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {ReviewModal} from "../component/ReviewModal";
+import "../assert/common.css"
 
 export const Reviews = () => {
 
-    const {reviews} = useContext(ReviewContext);
+    const {reviews, handleRemoveReview} = useContext(ReviewContext);
 
     const [open, setOpen] = useState(false);
 
@@ -16,8 +17,10 @@ export const Reviews = () => {
 
 
     return (<>
-            <div>
-                <Button onClick={handleOpen}>Open modal</Button>
+            <div style={{textAlign: "center"}}>
+                <Button className="btn" style={{marginTop:"3rem", width:"30%", fontSize:"1.2rem", backgroundColor:"#3a4943", color:"white"}} onClick={handleOpen}>
+                    Create Review
+                </Button>
 
             </div>
             <div className="container" style={{
@@ -69,9 +72,8 @@ export const Reviews = () => {
                                 />
                             </Box>
 
-                            {/* Tartalom */}
                             <CardContent sx={{textAlign: 'center'}}>
-                                <Typography variant="h6" fontWeight="bold">
+                                <Typography variant="h5" fontWeight="bold">
                                     {review.title}
                                 </Typography>
 
@@ -90,14 +92,13 @@ export const Reviews = () => {
                                 </Typography>
                             </CardContent>
 
-                            {/* Ikonok */}
                             <CardActions sx={{justifyContent: 'center'}}>
                                 <IconButton color="primary">
-                                    <EditIcon/>
+                                    <EditIcon />
                                 </IconButton>
 
-                                <IconButton color="error">
-                                    <DeleteIcon/>
+                                <IconButton color="error" onClick={() => handleRemoveReview(review.isbn13)}>
+                                    <DeleteIcon />
                                 </IconButton>
                             </CardActions>
 
