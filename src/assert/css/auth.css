@@ -22,7 +22,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url(../assert/img/welcome_page.jpg);
+    background-image: url(../img/welcome-page.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -81,7 +81,7 @@
 }
 
 .forgot-psw{
-    color: #3a4943;
-    margin-bottom: 1em;
-    text-decoration: underline;
+    color: #3a4943 !important;
+    margin-bottom: 1em !important;
+    text-decoration: underline !important;
 }

@@ -1,17 +1,17 @@
 import React, {useContext, useState} from 'react';
+import {Link as RouterLink, useNavigate} from "react-router-dom";
 import {
     Box, Button,
     TextField,
     Typography
 } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import {Link as RouterLink, useNavigate} from "react-router-dom";
 import Link from '@mui/material/Link';
+import {AuthContext} from "../context/auth/Auth";
+import {auth} from "../firebaseConfig";
 import {PasswordReset} from "../component/PasswordReset";
 import {PasswordField} from "../component/PasswordField";
-import {auth} from "../firebaseConfig";
-import {AuthContext} from "../context/auth/Auth";
-import '../assert/auth.css'
+import GoogleIcon from "@mui/icons-material/Google";
+import '../assert/css/auth.css'
 
 export const Login = () => {
 
@@ -62,14 +62,14 @@ export const Login = () => {
                 </Typography>
 
                 <TextField
-                    size="small"
                     id="email"
-                    label="Email"
                     name="email"
-                    value={formData.email}
+                    label="Email"
                     type="email"
                     variant="outlined"
                     required
+                    size="small"
+                    value={formData.email}
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />
 
@@ -87,24 +87,23 @@ export const Login = () => {
                         underline="hover"
                         onClick={handleOpen}
                         className="forgot-psw"
-                        sx={{ cursor: "pointer" }}
+                        sx={{cursor: "pointer"}}
                     >
                         Forgot password?
                     </Link>
                 </div>
 
                 <Button
+                    type="submit"
                     size="large"
                     variant="contained"
-                    type="submit"
                     style={{backgroundColor: "#3a4943"}}
                 >
                     Login
                 </Button>
 
                 <div className="link-container">
-                    <RouterLink className="link" to="/sign-up"
-                          variant="body1">
+                    <RouterLink className="link" to="/sign-up" variant="body1">
                         Don't have an account? Sign Up!
                     </RouterLink>
                 </div>

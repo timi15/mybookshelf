@@ -1,20 +1,23 @@
 import React, {useContext, useState} from 'react'
+import {useNavigate} from "react-router-dom";
 import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
-import "../assert/modal.css"
-import "../assert/common.css"
 import {ReviewContext} from "../context/review/Review";
+import {DateRangeFields} from "./DateRangeFields";
+import "../assert/css/modal.css"
+import "../assert/css/common.css"
 import placeholder from "../assert/img/placeholder.jpg"
-import {useNavigate} from "react-router-dom";
 
 export const ReviewModal = ({book = {}, open, close}) => {
 
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({})
-    const [rate, setRate] = React.useState(2);
+
     const {idToken} = useContext(AuthContext);
     const {handleAddReview} = useContext(ReviewContext);
+
+    const [formData, setFormData] = useState({})
+    const [rate, setRate] = React.useState(2);
 
 
     const handleSubmit = (e) => {
@@ -52,35 +55,27 @@ export const ReviewModal = ({book = {}, open, close}) => {
                 sx={{
                     display: "flex",
                     gap: 3,
-
                     flexDirection: "column",
-
                     "@media (min-width:1000px)": {
                         flexDirection: "row"
                     },
-
                     scrollbarWidth: "none",
                     "&::-webkit-scrollbar": {display: "none"}
                 }}
             >
-
-
                 <Box
                     sx={{
                         width: "100%",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-
                         order: -1,
-
                         "@media (min-width:1000px)": {
                             width: "40%",
                             order: 0
                         }
                     }}
                 >
-
                     <img
                         src={formData.image || book.image || placeholder}
                         alt="Preview"
@@ -97,12 +92,11 @@ export const ReviewModal = ({book = {}, open, close}) => {
                     <Rating
                         name="rating"
                         value={rate}
-                        onChange={(event, newValue) => setRate(newValue)}
                         size="large"
                         style={{margin: "2rem"}}
+                        onChange={(event, newValue) => setRate(newValue)}
                     />
                 </Box>
-
 
                 <Box
                     sx={{
@@ -115,28 +109,28 @@ export const ReviewModal = ({book = {}, open, close}) => {
 
                         <Box sx={{display: "flex", gap: 2}}>
                             <TextField
-                                size="small"
-                                label="ISBN13"
-                                fullWidth
                                 id="isbn13"
                                 name="isbn13"
-                                value={formData.isbn13}
+                                label="ISBN13"
                                 type="text"
                                 required
+                                fullWidth
+                                size="small"
+                                value={formData.isbn13}
                                 onChange={({target}) =>
                                     setFormData({...formData, [target.name]: target.value})
                                 }
                             />
 
                             <TextField
-                                size="small"
-                                label="Image URL"
-                                fullWidth
                                 id="image"
                                 name="image"
-                                value={formData.image}
+                                label="Image URL"
                                 type="text"
                                 required
+                                fullWidth
+                                size="small"
+                                value={formData.image}
                                 onChange={({target}) =>
                                     setFormData({...formData, [target.name]: target.value})
                                 }
@@ -150,10 +144,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                                 {book.title}
                             </Typography>
 
-                            <Typography
-                                variant="6"
-                                sx={{mb: 5}}
-                            >
+                            <Typography variant="6" sx={{mb: 5}}>
                                 {book.author}
                             </Typography>
                         </>
@@ -163,28 +154,28 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         <Box sx={{display: "flex", gap: 2}}>
 
                             <TextField
-                                label="Title"
-                                size="small"
-                                fullWidth
                                 id="title"
                                 name="title"
-                                value={formData.title}
+                                label="Title"
                                 type="text"
                                 required
+                                fullWidth
+                                size="small"
+                                value={formData.title}
                                 onChange={({target}) =>
                                     setFormData({...formData, [target.name]: target.value})
                                 }
                             />
 
                             <TextField
-                                label="Author"
-                                size="small"
-                                fullWidth
                                 id="author"
                                 name="author"
-                                value={formData.author}
+                                label="Author"
                                 type="text"
                                 required
+                                fullWidth
+                                size="small"
+                                value={formData.author}
                                 onChange={({target}) =>
                                     setFormData({...formData, [target.name]: target.value})
                                 }
@@ -193,73 +184,34 @@ export const ReviewModal = ({book = {}, open, close}) => {
                     )}
 
                     <TextField
-                        size="small"
-                        label="Plot"
-                        multiline
-                        rows={2}
-                        fullWidth
                         id="plot"
                         name="plot"
-                        value={book.plot || formData.plot}
+                        label="Plot"
+                        type="text"
                         required
+                        rows={2}
+                        multiline
+                        fullWidth
+                        size="small"
+                        value={book.plot || formData.plot}
                         onChange={({target}) =>
                             setFormData({...formData, [target.name]: target.value})
                         }
                     />
 
-                    <Box sx={{display: "flex", gap: 2}}>
-                        <TextField
-                            size="small"
-                            fullWidth
-                            id="startDate"
-                            name="startDate"
-                            value={formData.startDate}
-                            type="date"
-                            required
-                            slotProps={{
-                                input: {
-                                    inputProps: {
-                                        max: new Date().toISOString().split("T")[0]
-                                    }
-                                }
-                            }}
-                            onChange={({target}) =>
-                                setFormData({...formData, [target.name]: target.value})
-                            }
-                        />
-
-                        <TextField
-                            fullWidth
-                            size="small"
-                            id="finishDate"
-                            name="finishDate"
-                            value={formData.finishDate}
-                            type="date"
-                            required
-                            slotProps={{
-                                input: {
-                                    inputProps: {
-                                        min: formData.startDate || "",
-                                        max: new Date().toISOString().split("T")[0]
-                                    }
-                                }
-                            }}
-                            onChange={({target}) =>
-                                setFormData({...formData, [target.name]: target.value})
-                            }
-                        />
-                    </Box>
+                    <DateRangeFields formData={formData} setFormData={setFormData}/>
 
                     <TextField
-                        size="small"
+                        id="reflection"
+                        name="reflection"
+                        label="Reflection"
+                        type="text"
+                        required
                         multiline
                         rows={2}
                         fullWidth
-                        id="reflection"
-                        label="Reflection"
-                        name="reflection"
+                        size="small"
                         value={formData.reflection}
-                        required
                         onChange={({target}) =>
                             setFormData({...formData, [target.name]: target.value})
                         }
@@ -268,11 +220,9 @@ export const ReviewModal = ({book = {}, open, close}) => {
                     <Button type="submit" variant="contained" size="large" style={{backgroundColor: "#3a4943"}}>
                         Save
                     </Button>
-                </Box>
 
+                </Box>
             </Box>
         </Modal>
-
-
     )
 }

@@ -20,12 +20,12 @@ export const PasswordField = ({name, label, value, onChange, required}) => {
         <FormControl variant="outlined" required={required}>
             <InputLabel size="small" htmlFor={name}>Password</InputLabel>
             <OutlinedInput
-                size="small"
                 id={name}
                 name={name}
                 label={label}
                 value={value}
                 type={showPassword ? 'text' : 'password'}
+                size="small"
                 onChange={onChange}
                 endAdornment={
                     <InputAdornment position="end">
@@ -38,7 +38,6 @@ export const PasswordField = ({name, label, value, onChange, required}) => {
                             onMouseDown={handleMouseDownPassword}
                             onMouseUp={handleMouseUpPassword}
                             edge="end"
-
                         >
                             {showPassword ? <VisibilityOff/> : <Visibility/>}
                         </IconButton>

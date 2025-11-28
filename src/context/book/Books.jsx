@@ -1,5 +1,5 @@
-import React, { createContext } from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, {createContext} from "react";
+import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 
 export const BookContext = createContext();
@@ -15,7 +15,7 @@ export const Books = ({ children }) => {
 
             const lists = res.data.results.lists;
 
-            const formatted = lists.map((list) => ({
+            return lists.map((list) => ({
                 genre: list.display_name,
                 books: list.books.map((b) => ({
                     isbn13: b.primary_isbn13,
@@ -25,8 +25,6 @@ export const Books = ({ children }) => {
                     plot: b.description,
                 })),
             }));
-
-            return formatted;
         },
     });
 

@@ -1,16 +1,16 @@
 import React, {useContext, useState} from 'react'
+import {Link, useNavigate} from "react-router-dom";
 import {
     Box,
     Button,
     TextField,
     Typography
 } from "@mui/material";
-import GoogleIcon from '@mui/icons-material/Google';
-import {Link, useNavigate} from "react-router-dom";
+import {auth} from "../firebaseConfig"
 import {AuthContext} from "../context/auth/Auth";
 import {PasswordField} from "../component/PasswordField";
-import {auth} from "../firebaseConfig"
-import '../assert/auth.css'
+import GoogleIcon from '@mui/icons-material/Google';
+import '../assert/css/auth.css'
 
 export const SignUp = () => {
 
@@ -57,26 +57,26 @@ export const SignUp = () => {
                 </Typography>
 
                 <TextField
-                    size="small"
                     id="name"
-                    label="Name"
                     name="name"
-                    value={formData.name}
+                    label="Name"
                     type="text"
+                    size="small"
                     variant="outlined"
                     required
+                    value={formData.name}
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />
 
                 <TextField
-                    size="small"
                     id="email"
-                    label="Email"
                     name="email"
-                    value={formData.email}
+                    label="Email"
                     type="email"
+                    size="small"
                     variant="outlined"
                     required
+                    value={formData.email}
                     onChange={({target: {name, value}}) => setFormData({...formData, [name]: value})}
                 />
 
@@ -88,17 +88,16 @@ export const SignUp = () => {
                 />
 
                 <Button
+                    type="submit"
                     size="large"
                     variant="contained"
-                    type="submit"
                     style={{backgroundColor: "#3a4943"}}
                 >
                     Sign Up
                 </Button>
 
                 <div className="link-container">
-                    <Link className="link" to="/sign-in"
-                          variant="body1">
+                    <Link className="link" to="/sign-in" variant="body1">
                         Already have an account? Login!
                     </Link>
                 </div>
@@ -112,7 +111,8 @@ export const SignUp = () => {
                     variant="contained"
                     style={{backgroundColor: "#3a4943"}}
                     onClick={handleSubmitGoogle}>
-                    <GoogleIcon className="google-icon" fontSize="medium"/> Login with Google
+                    <GoogleIcon className="google-icon" fontSize="medium"/>
+                    Login with Google
                 </Button>
 
             </Box>

@@ -1,13 +1,13 @@
 import React, {useContext} from "react";
 import Carousel from "react-multi-carousel";
-import 'react-multi-carousel/lib/styles.css';
-import {BookCard} from "../component/BookCard";
 import {BookContext} from "../context/book/Books";
-import "../assert/home.css"
+import {BookCard} from "../component/BookCard";
+import 'react-multi-carousel/lib/styles.css';
+import "../assert/css/home.css"
 
 export const Home = () => {
 
-    const { data, isLoading, isError } = useContext(BookContext);
+    const {data, isLoading, isError} = useContext(BookContext);
 
     const responsive = {
         xxl: {breakpoint: {max: 3000, min: 1500}, items: 7},
@@ -22,7 +22,8 @@ export const Home = () => {
     if (isError) return <div>Error loading books</div>;
 
     return (
-        <div >
+        <>
+
             {data.map(({genre, books}) => (
                 <div key={genre} style={{marginBottom: "3rem"}}>
                     <h2 style={{marginBottom: "1rem"}}>{genre}</h2>
@@ -41,6 +42,7 @@ export const Home = () => {
                     </Carousel>
                 </div>
             ))}
-        </div>
+
+        </>
     );
 };

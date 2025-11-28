@@ -1,11 +1,11 @@
 import React, {useContext, useState} from 'react'
-import {ReviewContext} from "../context/review/Review";
 import {Box, Button, Card, CardActions, CardContent, CardMedia, IconButton, Rating, Typography} from "@mui/material";
+import {ReviewContext} from "../context/review/Review";
+import {ReviewModal} from "../component/ReviewModal";
+import {ModifyReviewModal} from "../component/ModifyReviewModal";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import {ReviewModal} from "../component/ReviewModal";
-import "../assert/common.css"
-import {ModifyReviewModal} from "../component/ModifyReviewModal";
+import "../assert/css/common.css"
 
 export const Reviews = () => {
 
@@ -66,7 +66,7 @@ export const Reviews = () => {
                                 paddingLeft: "1rem",
                                 paddingRight: "1rem",
                                 width: '100%',
-                                opacity:'60%'
+                                opacity: '60%'
                             }}>
                                 <Typography variant="body2" sx={{color: 'text.secondary'}}>
                                     {review.startDate}
@@ -132,7 +132,7 @@ export const Reviews = () => {
                                         color="primary"
                                         onClick={() => {
                                             setSelectedIsbn13(review.isbn13);
-                                            setOpenModifyModal(true);
+                                            handleOpenModifyModal();
                                         }}
                                         sx={{
                                             width: '100%',
