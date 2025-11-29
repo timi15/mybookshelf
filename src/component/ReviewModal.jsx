@@ -5,6 +5,7 @@ import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
 import {DateRangeFields} from "./DateRangeFields";
+import {BookContext} from "../context/book/Books";
 import "../assert/css/modal.css"
 import "../assert/css/common.css"
 import placeholder from "../assert/img/placeholder.jpg"
@@ -15,9 +16,10 @@ export const ReviewModal = ({book = {}, open, close}) => {
 
     const {idToken} = useContext(AuthContext);
     const {handleAddReview} = useContext(ReviewContext);
+    const {handleAddBook} = useContext(BookContext);
 
     const [formData, setFormData] = useState({})
-    const [rate, setRate] = React.useState(2);
+    const [rate, setRate] = React.useState(5);
 
 
     const handleSubmit = (e) => {
@@ -50,6 +52,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
             .then(res => {
                 if (res.status === 201) {
                     handleAddReview(res.data);
+                    handleAddBook(res.data.book);
                     close();
                     navigate("/reviews")
 
@@ -85,6 +88,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
+                        justifyContent:"center",
                         order: -1,
                         "@media (min-width:1000px)": {
                             width: "40%",

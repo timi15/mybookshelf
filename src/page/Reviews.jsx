@@ -53,7 +53,7 @@ export const Reviews = () => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                backgroundColor: '#fafafa'
+                                backgroundColor: 'rgba(241,236,219,0.77)'
                             }}
                             key={review.isbn13}
                         >
