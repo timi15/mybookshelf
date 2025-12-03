@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate} from "react-router-dom";
 import {Layout} from "./component/Layout";
 import {Home} from "./page/Home";
-import {Favourites} from "./page/Favourites";
+import {Loved} from "./page/Loved";
 import {ToRead} from "./page/ToRead";
 import {Reviews} from "./page/Reviews";
 import {Login} from "./page/Login";
@@ -22,7 +22,7 @@ function App() {
                 <Route element={<ProtectedRoute><Layout/></ProtectedRoute>}>
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/library" element={<Library/>}/>
-                    <Route path="/loved" element={<Favourites/>}/>
+                    <Route path="/loved" element={<Loved/>}/>
                     <Route path="/to-read" element={<ToRead/>}/>
                     <Route path="/reviews" element={<Reviews/>}/>
                 </Route>
