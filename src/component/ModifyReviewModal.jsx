@@ -1,10 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
+import {Box, Button, Modal, Rating, TextField, Typography, Chip } from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
-import placeholder from "../assert/img/placeholder.jpg"
+import {BASE_URL} from "../config/api";
 import {DateRangeFields} from "./DateRangeFields";
+import placeholder from "../assert/img/placeholder.jpg"
 
 export const ModifyReviewModal = ({isbn13, open, close}) => {
 
@@ -17,14 +18,15 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
         rate: 0,
         startDate: "",
         finishDate: "",
+        genres:[],
         reflection: "",
     });
 
     useEffect(() => {
-        if (!isbn13 ) return;
+        if (!isbn13) return;
         console.log(currentReview);
         axios
-            .get(`http://localhost:8080/v1/mybookshelf/book-review/${isbn13}`, {
+            .get(`${BASE_URL}/v1/mybookshelf/book-review/${isbn13}`, {
                 headers: {
                     "Authorization": `Bearer ${idToken}`
                 }
@@ -37,6 +39,7 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                     rate: Number(data.rate) || 0,
                     startDate: data.startDate || "",
                     finishDate: data.finishDate || "",
+                    genres: data.genres || [],
                     reflection: data.reflection || "",
                 });
             });
@@ -141,6 +144,14 @@ export const ModifyReviewModal = ({isbn13, open, close}) => {
                             setFormData({...formData, [target.name]: target.value})
                         }
                     />
+
+                    <Box sx={{mb: 4, textAlign:"center"}}>
+                        {
+                           formData.genres?.map((genre) => (
+                                <Chip sx={{marginLeft:"2rem"}} label={genre}/>
+                            ))
+                        }
+                    </Box>
 
                     <DateRangeFields formData={formData} setFormData={setFormData}/>
 

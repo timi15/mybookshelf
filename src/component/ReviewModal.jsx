@@ -4,11 +4,14 @@ import {Box, Button, Modal, Rating, TextField, Typography} from "@mui/material";
 import axios from "axios";
 import {AuthContext} from "../context/auth/Auth";
 import {ReviewContext} from "../context/review/Review";
-import {DateRangeFields} from "./DateRangeFields";
 import {BookContext} from "../context/book/Books";
+import {DateRangeFields} from "./DateRangeFields";
+import {GenreSelect} from "./GenreSelect";
+import {BASE_URL} from "../config/api";
+import placeholder from "../assert/img/placeholder.jpg"
 import "../assert/css/modal.css"
 import "../assert/css/common.css"
-import placeholder from "../assert/img/placeholder.jpg"
+import {IssueAlertContext} from "../context/IssueAlert";
 
 export const ReviewModal = ({book = {}, open, close}) => {
 
@@ -17,36 +20,37 @@ export const ReviewModal = ({book = {}, open, close}) => {
     const {idToken} = useContext(AuthContext);
     const {handleAddReview} = useContext(ReviewContext);
     const {handleAddBook} = useContext(BookContext);
+    const {showAlert} = useContext(IssueAlertContext);
 
     const [formData, setFormData] = useState({})
     const [rate, setRate] = React.useState(5);
+    const [genres, setGenres] = useState([]);
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const submit = {
-            isbn13: book.isbn13  || formData.isbn13,
+            isbn13: book.isbn13 || formData.isbn13,
             book: {
-                isbn13: book.isbn13  || formData.isbn13,
-                title: book.title  || formData.title,
+                isbn13: book.isbn13 || formData.isbn13,
+                title: book.title || formData.title,
                 author: book.author || formData.author,
                 image: book.image || formData.image,
                 plot: book.plot || formData.plot
             },
+            genres: genres,
             rate: rate,
             startDate: formData.startDate,
             finishDate: formData.finishDate,
             reflection: formData.reflection
         };
 
-        console.log(submit)
-
         axios
-            .post('http://localhost:8080/v1/mybookshelf/book-review/save', submit, {
+            .post(`${BASE_URL}/v1/mybookshelf/book-review/save`, submit, {
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${idToken}`
+                    "Authorization": `Bearer ${idToken}`,
+                    "Content-Type": "application/json"
                 }
             })
             .then(res => {
@@ -54,8 +58,17 @@ export const ReviewModal = ({book = {}, open, close}) => {
                     handleAddReview(res.data);
                     handleAddBook(res.data.book);
                     close();
-                    navigate("/reviews")
-
+                    navigate("/reviews");
+                    showAlert('Review added successfully.', 'success');
+                }
+                setFormData({});
+                setGenres([]);
+            })
+            .catch((err) => {
+                if (err.response?.status === 409) {
+                    const errors = err.response.data.errors;
+                    const firstError = Object.values(errors)[0][0];
+                    showAlert(firstError, "error");
                 }
             })
     };
@@ -64,7 +77,11 @@ export const ReviewModal = ({book = {}, open, close}) => {
     return (
         <Modal
             open={open}
-            onClose={close}
+            onClose={() => {
+                close();
+                setFormData({});
+                setGenres([]);
+            }}
         >
             <Box
                 className="modal-style"
@@ -88,7 +105,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        justifyContent:"center",
+                        justifyContent: "center",
                         order: -1,
                         "@media (min-width:1000px)": {
                             width: "40%",
@@ -116,6 +133,7 @@ export const ReviewModal = ({book = {}, open, close}) => {
                         style={{margin: "2rem"}}
                         onChange={(event, newValue) => setRate(newValue)}
                     />
+
                 </Box>
 
                 <Box
@@ -218,6 +236,8 @@ export const ReviewModal = ({book = {}, open, close}) => {
                             setFormData({...formData, [target.name]: target.value})
                         }
                     />
+
+                    <GenreSelect value={genres} onChange={setGenres}/>
 
                     <DateRangeFields formData={formData} setFormData={setFormData}/>
 
