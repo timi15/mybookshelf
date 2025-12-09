@@ -8,6 +8,7 @@ import {Library} from "./page/Library";
 import {Loved} from "./page/Loved";
 import {ToRead} from "./page/ToRead";
 import {Reviews} from "./page/Reviews";
+import {Profile} from "./page/Profile";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/loved" element={<Loved/>}/>
                     <Route path="/to-read" element={<ToRead/>}/>
                     <Route path="/reviews" element={<Reviews/>}/>
+                    <Route path="/profile" element={<Profile/>}/>
                 </Route>
 
             </Routes>
