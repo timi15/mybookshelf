@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/mybookshelf/static/css/main.a3e6f8a7.css",
+    "main.js": "/mybookshelf/static/js/main.682eefad.js",
+    "static/js/453.2b7ad548.chunk.js": "/mybookshelf/static/js/453.2b7ad548.chunk.js",
+    "static/media/welcome-page.jpg": "/mybookshelf/static/media/welcome-page.897c40e14e2b9d1c799b.jpg",
+    "static/media/placeholder.jpg": "/mybookshelf/static/media/placeholder.a861f166fb7230914896.jpg",
+    "static/media/revicons.eot": "/mybookshelf/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/mybookshelf/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/revicons.woff": "/mybookshelf/static/media/revicons.e8746a624ed098489406.woff",
+    "index.html": "/mybookshelf/index.html",
+    "main.a3e6f8a7.css.map": "/mybookshelf/static/css/main.a3e6f8a7.css.map",
+    "main.682eefad.js.map": "/mybookshelf/static/js/main.682eefad.js.map",
+    "453.2b7ad548.chunk.js.map": "/mybookshelf/static/js/453.2b7ad548.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a3e6f8a7.css",
+    "static/js/main.682eefad.js"
+  ]
+}
