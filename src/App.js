@@ -28,7 +28,7 @@ function App() {
                 <Route path="/to-read" element={<ToRead/>}/>
                 <Route path="/reviews" element={<Reviews/>}/>
                 <Route path="/profile" element={<Profile/>}/>
-                <Route path="/overview" element={<Dashboard/>}/>
+                <Route path="/dashboard" element={<Dashboard/>}/>
             </Route>
 
         </Routes>

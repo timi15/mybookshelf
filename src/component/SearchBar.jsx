@@ -53,7 +53,11 @@ export const SearchBar = ({data, onSearch, isReview}) => {
             marginLeft: 'auto',
             marginRight: 'auto',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            backgroundColor:"rgba(241,236,219,0.61)",
+            width:'80%',
+            paddingTop:"0.8rem",
+            borderRadius: 6,
         }}>
 
             <FormControl margin="normal" sx={{width: '10rem'}}>
@@ -77,7 +81,7 @@ export const SearchBar = ({data, onSearch, isReview}) => {
                 label={mode === "title" ? "The title of the book..." : "The author of the book..."}
                 variant="outlined"
                 value={query}
-                sx={{width: '30rem'}}
+                sx={{width: '25rem'}}
                 onChange={(e) => setQuery(e.target.value)}
             />
 

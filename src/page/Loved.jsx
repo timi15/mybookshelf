@@ -16,7 +16,7 @@ export const Loved = () => {
 
             <div className="book-grid">
                 {displayed?.map((book) => (
-                    <BookCard key={book.isbn13} book={book}/>
+                    <BookCard key={book.isbn13} book={book} list_name="loved"/>
                 ))}
             </div>
         </>

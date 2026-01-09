@@ -122,7 +122,7 @@ export const Reviews = () => {
                                     {review.book.title}
                                 </Typography>
 
-                                <Typography variant="subtitle2" sx={{mb: 1}}>
+                                <Typography variant="subtitle2" sx={{mb: 1, fontSize:"1rem"}}>
                                     {review.book.author}
                                 </Typography>
 
